@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies"
+      - mvn install -DskipTests
+  build:
+    commands:
+      - echo "Building the application"
+      - mvn package -DskipTests
+  post_build:
+    commands:
+      - echo "Uploading artifact to S3"
+      - aws s3 cp target/demo-0.0.1-SNAPSHOT.jar s3://my-jobs-app-bucket/demo-0.0.1-SNAPSHOT.jar
+artifacts:
+  files:
+    - target/demo-0.0.1-SNAPSHOT.jar
